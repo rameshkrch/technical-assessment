@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: warehouseservice
+  r2dbc:
+    username: user
+    password: password
+    url: r2dbc:postgresql://localhost:5432/warehouse
