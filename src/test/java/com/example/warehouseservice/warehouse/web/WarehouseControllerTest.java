@@ -26,7 +26,7 @@ class WarehouseControllerTest {
 
     @Test
     void whenLoadingArticles() {
-        var article = new Article("88", "Bella", 5);
+        var article = new Article(88, "Bella", 5);
         var loadArticlesRequest = new LoadArticlesRequest(List.of(article));
 
         var expectedArticle = article;
@@ -46,8 +46,8 @@ class WarehouseControllerTest {
 
     @Test
     void whenLoadingProducts() {
-        var productPart = new ProductPart("33", 3);
-        var product = new Product("Tre", 300, List.of(productPart));
+        var productPart = new ProductPart(1, 33, 3);
+        var product = new Product(1, "Tre", 300, List.of(productPart));
         var loadProductsRequest = new LoadProductsRequest(List.of(product));
 
         var expectedProduct = product;
