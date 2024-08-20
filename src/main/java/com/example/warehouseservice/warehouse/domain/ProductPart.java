@@ -2,14 +2,12 @@ package com.example.warehouseservice.warehouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public record Article(
+public record ProductPart(
 
         @JsonProperty("art_id")
         String artId,
 
-        String name,
-
-        @JsonProperty("stock")
+        @JsonProperty("amount_of")
         Integer quantity
-) {
-}
+
+) {}
