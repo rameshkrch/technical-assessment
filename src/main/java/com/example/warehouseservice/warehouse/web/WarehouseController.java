@@ -26,7 +26,7 @@ public class WarehouseController {
     }
 
     @PostMapping("/products")
-    public Flux<Article> loadProducts(@RequestBody @Valid LoadProductsRequest loadProductsRequest) {
+    public Flux<Product> loadProducts(@RequestBody @Valid LoadProductsRequest loadProductsRequest) {
         log.info("Save products {}", loadProductsRequest.products());
         return warehouseService.saveProducts(loadProductsRequest.products());
     }

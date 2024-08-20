@@ -8,7 +8,7 @@ import java.util.List;
 @Service
 public class WarehouseService {
 
-    public Flux<Article> saveProducts(List<Product> products) {
+    public Flux<Product> saveProducts(List<Product> products) {
         // TODO: Save batch of products
         return null;
     }
