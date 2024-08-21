@@ -9,6 +9,7 @@ import jakarta.validation.constraints.Positive;
 
 
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -72,5 +73,18 @@ public class Product {
 
         public void setParts(@NotNull List<ProductPart> parts) {
                 this.parts = parts;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Product product = (Product) o;
+                return id == product.id && price == product.price && Objects.equals(name, product.name) && Objects.equals(parts, product.parts);
+        }
+
+        @Override
+        public int hashCode() {
+                return Objects.hash(id, name, price, parts);
         }
 }

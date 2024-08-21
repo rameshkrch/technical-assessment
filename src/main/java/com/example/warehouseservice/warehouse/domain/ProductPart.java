@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 
+import java.util.Objects;
+
 @Entity
 @Table(name = "PRODUCTPARTS")
 public class ProductPart {
@@ -69,5 +71,18 @@ public class ProductPart {
 
         public void setQuantity(@Positive int quantity) {
                 this.quantity = quantity;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                ProductPart that = (ProductPart) o;
+                return id == that.id && artId == that.artId && quantity == that.quantity && Objects.equals(product, that.product);
+        }
+
+        @Override
+        public int hashCode() {
+                return Objects.hash(id, product, artId, quantity);
         }
 }

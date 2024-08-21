@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 
+import java.util.Objects;
+
 
 @Entity
 @Table(name = "ARTICLES")
@@ -56,5 +58,18 @@ public class Article {
 
         public void setQuantity(@PositiveOrZero int quantity) {
                 this.quantity = quantity;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+                if (this == o) return true;
+                if (o == null || getClass() != o.getClass()) return false;
+                Article article = (Article) o;
+                return id == article.id && quantity == article.quantity && Objects.equals(name, article.name);
+        }
+
+        @Override
+        public int hashCode() {
+                return Objects.hash(id, name, quantity);
         }
 }
