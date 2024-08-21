@@ -2,32 +2,72 @@ package com.example.warehouseservice.warehouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Positive;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
-
-@Table("ProductParts")
-public record ProductPart(
+@Entity
+@Table(name = "PRODUCTPARTS")
+public class ProductPart {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @JsonIgnore
-        int id,
+        private int id;
 
+        @ManyToOne(fetch = FetchType.LAZY, optional = false)
+        @JoinColumn(name="prod_id", nullable=false)
         @JsonIgnore
-        int prodId,
+        private Product product;
 
-        @NotBlank(message = "The art_id must be defined.")
+        @Positive(message = "The art_id must be defined.")
         @JsonProperty("art_id")
-        int artId,
+        private int artId;
 
         @Positive
         @JsonProperty("amount_of")
-        int quantity
+        private int quantity;
 
-) {
-        public ProductPart(int prodId, int artId, int quantity) {
-                this(0, prodId, artId, quantity);
+        public ProductPart() {
+
+        }
+
+        public ProductPart(int id, Product product, int artId, int quantity) {
+                this.id = id;
+                this.product = product;
+                this.artId = artId;
+                this.quantity = quantity;
+        }
+
+        public int getId() {
+                return id;
+        }
+
+        public void setId(int id) {
+                this.id = id;
+        }
+
+        public Product getProduct() {
+                return product;
+        }
+
+        public void setProduct(Product product) {
+                this.product = product;
+        }
+
+        public int getArtId() {
+                return artId;
+        }
+
+        public void setArtId(int artId) {
+                this.artId = artId;
+        }
+
+        @Positive
+        public int getQuantity() {
+                return quantity;
+        }
+
+        public void setQuantity(@Positive int quantity) {
+                this.quantity = quantity;
         }
 }

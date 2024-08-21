@@ -2,30 +2,75 @@ package com.example.warehouseservice.warehouse.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
 
-@Table("Products")
-public record Product(
+@Entity
+@Table(name = "PRODUCTS")
+public class Product {
 
         @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
         @JsonIgnore
-        int id,
+        private int id;
 
         @NotBlank(message = "The name must be defined.")
-        String name,
+        private String name;
 
         @Positive
-        int price,
+        private int price;
 
+        @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
         @NotNull
         @JsonProperty("contain_articles")
-        List<ProductPart> parts
+        private List<ProductPart> parts;
 
-) {}
+        public Product() {
+
+        }
+
+        public Product(int id, String name, int price, List<ProductPart> parts) {
+                this.id = id;
+                this.name = name;
+                this.price = price;
+                this.parts = parts;
+        }
+
+        public int getId() {
+                return id;
+        }
+
+        public void setId(int id) {
+                this.id = id;
+        }
+
+        public @NotBlank(message = "The name must be defined.") String getName() {
+                return name;
+        }
+
+        public void setName(@NotBlank(message = "The name must be defined.") String name) {
+                this.name = name;
+        }
+
+        @Positive
+        public int getPrice() {
+                return price;
+        }
+
+        public void setPrice(@Positive int price) {
+                this.price = price;
+        }
+
+        public @NotNull List<ProductPart> getParts() {
+                return parts;
+        }
+
+        public void setParts(@NotNull List<ProductPart> parts) {
+                this.parts = parts;
+        }
+}

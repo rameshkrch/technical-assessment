@@ -2,7 +2,6 @@ package com.example.warehouseservice.warehouse.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
 
@@ -15,20 +14,33 @@ public class WarehouseService {
     @Autowired
     ProductRepository productRepository;
 
-    public Flux<Product> saveProducts(List<Product> products) {
+    public List<Product> saveProducts(List<Product> products) {
+        connectAllProductParts(products);
         return productRepository.saveAll(products);
     }
 
-    public Flux<Article> saveArticles(List<Article> articles) {
+    private void connectAllProductParts(List<Product> products) {
+        for (Product product : products) {
+            connectProductParts(product);
+        }
+    }
+
+    private void connectProductParts(Product product) {
+        for (ProductPart productPart : product.getParts()) {
+            productPart.setProduct(product);
+        }
+    }
+
+    public List<Article> saveArticles(List<Article> articles) {
         return articleRepository.saveAll(articles);
     }
 
-    public Flux<Product> getAvailableProducts() {
+    public List<Product> getAvailableProducts() {
         // TODO: Find available products
         return null;
     }
 
-    public Flux<Product> sellProduct(String s, Integer quantity) {
+    public List<Product> sellProduct(String s, Integer quantity) {
         // TODO: Verify inventory
 
         // TODO: Update inventory
