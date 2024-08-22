@@ -20,13 +20,13 @@ public class WarehouseController {
     @Autowired
     private WarehouseService warehouseService;
 
-    @PostMapping("/articles")
+    @PostMapping("/load/articles")
     public List<Article> loadArticles(@RequestBody @Valid LoadArticlesRequest loadArticlesRequest) {
         log.info("Save articles {}", loadArticlesRequest.articles());
         return warehouseService.saveArticles(loadArticlesRequest.articles());
     }
 
-    @PostMapping("/products")
+    @PostMapping("/load/products")
     public List<Product> loadProducts(@RequestBody @Valid LoadProductsRequest loadProductsRequest) {
         log.info("Save products {}", loadProductsRequest.products());
         return warehouseService.saveProducts(loadProductsRequest.products());
