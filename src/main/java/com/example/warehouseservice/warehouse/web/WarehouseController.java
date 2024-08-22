@@ -1,7 +1,8 @@
 package com.example.warehouseservice.warehouse.web;
 
 import com.example.warehouseservice.warehouse.domain.Article;
-import com.example.warehouseservice.warehouse.domain.Product;
+import com.example.warehouseservice.warehouse.domain.ProductDto;
+import com.example.warehouseservice.warehouse.domain.SalesProduct;
 import com.example.warehouseservice.warehouse.domain.WarehouseService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
@@ -27,19 +28,19 @@ public class WarehouseController {
     }
 
     @PostMapping("/load/products")
-    public List<Product> loadProducts(@RequestBody @Valid LoadProductsRequest loadProductsRequest) {
+    public List<ProductDto> loadProducts(@RequestBody @Valid LoadProductsRequest loadProductsRequest) {
         log.info("Save products {}", loadProductsRequest.products());
         return warehouseService.saveProducts(loadProductsRequest.products());
     }
 
     @GetMapping("/products")
-    public List<Product> getProducts() {
+    public List<SalesProduct> getProducts() {
         log.info("Fetching available products");
         return warehouseService.getAvailableProducts();
     }
 
     @PostMapping("/sell")
-    public List<Product> sellProduct(@RequestBody @Valid SellRequest sellRequest) {
+    public List<ProductDto> sellProduct(@RequestBody @Valid SellRequest sellRequest) {
         log.info("Processing sell request {}", sellRequest);
         return warehouseService.sellProduct(sellRequest.productName(), sellRequest.quantity());
     }

@@ -7,17 +7,16 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
+public class ProductDao {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        @JsonIgnore
         private int id;
 
         @NotBlank(message = "The name must be defined.")
@@ -28,18 +27,21 @@ public class Product {
 
         @OneToMany(mappedBy = "product", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
         @NotNull
-        @JsonProperty("contain_articles")
-        private List<ProductPart> parts;
+        private List<ProductPartDao> parts;
 
-        public Product() {
+        public ProductDao() {
 
         }
 
-        public Product(int id, String name, int price, List<ProductPart> parts) {
+        public ProductDao(int id, String name, int price, List<ProductPartDao> productPartDaoList) {
                 this.id = id;
                 this.name = name;
                 this.price = price;
-                this.parts = parts;
+                this.parts = productPartDaoList;
+        }
+
+        public ProductDao(String name, int price) {
+                this(0, name, price, new ArrayList<>());
         }
 
         public int getId() {
@@ -67,11 +69,11 @@ public class Product {
                 this.price = price;
         }
 
-        public @NotNull List<ProductPart> getParts() {
+        public @NotNull List<ProductPartDao> getParts() {
                 return parts;
         }
 
-        public void setParts(@NotNull List<ProductPart> parts) {
+        public void setParts(@NotNull List<ProductPartDao> parts) {
                 this.parts = parts;
         }
 
@@ -79,7 +81,7 @@ public class Product {
         public boolean equals(Object o) {
                 if (this == o) return true;
                 if (o == null || getClass() != o.getClass()) return false;
-                Product product = (Product) o;
+                ProductDao product = (ProductDao) o;
                 return id == product.id && price == product.price && Objects.equals(name, product.name) && Objects.equals(parts, product.parts);
         }
 

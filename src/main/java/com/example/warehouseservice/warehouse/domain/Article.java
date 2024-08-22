@@ -35,6 +35,10 @@ public class Article {
                 this.quantity = quantity;
         }
 
+        public Article(int id) {
+                this(id, "", 0);
+        }
+
         public int getId() {
                 return id;
         }

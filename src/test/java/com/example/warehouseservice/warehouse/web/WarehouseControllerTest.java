@@ -1,8 +1,8 @@
 package com.example.warehouseservice.warehouse.web;
 
 import com.example.warehouseservice.warehouse.domain.Article;
-import com.example.warehouseservice.warehouse.domain.Product;
-import com.example.warehouseservice.warehouse.domain.ProductPart;
+import com.example.warehouseservice.warehouse.domain.ProductDto;
+import com.example.warehouseservice.warehouse.domain.ProductPartDto;
 import com.example.warehouseservice.warehouse.domain.WarehouseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -56,9 +56,9 @@ class WarehouseControllerTest {
     @Test
     void whenLoadingProducts() throws Exception {
         var article = new Article(88, "Bella", 5);
-        var product = new Product(1, "Tre", 300, new ArrayList<>());
-        var productPart = new ProductPart(0, product, article.getId(), 3);
-        product.getParts().add(productPart);
+        var product = new ProductDto("Tre", 300, new ArrayList<>());
+        var productPart = new ProductPartDto(article.getId(), 3);
+        product.parts().add(productPart);
 
         var loadProductsRequest = new LoadProductsRequest(List.of(product));
         var expectedProduct = product;
@@ -74,8 +74,8 @@ class WarehouseControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(jsonPath("$[0]").exists())
-                .andExpect(jsonPath("$[0].name").value(expectedProduct.getName()))
-                .andExpect(jsonPath("$[0].price").value(expectedProduct.getPrice()));
+                .andExpect(jsonPath("$[0].name").value(expectedProduct.name()))
+                .andExpect(jsonPath("$[0].price").value(expectedProduct.price()));
     }
 
     public static String asJson(final Object obj) {
