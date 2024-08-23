@@ -2,12 +2,21 @@ services:
 
   # Applications
 
-
+  warehouseservice:
+    depends_on:
+      - postgres
+    image: "warehouseservice"
+    container_name: "warehouseservice"
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/warehouse
+      - SPRING_FLYWAY_URL=jdbc:postgresql://postgres:5432/warehouse
 
 
   # Backing Services
 
-  polar-postgres:
+  postgres:
     image: "postgres"
     container_name: "postgres"
     ports:

@@ -7,10 +7,15 @@ import com.example.warehouseservice.warehouse.domain.WarehouseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.testcontainers.containers.PostgreSQLContainer;
+import org.testcontainers.junit.jupiter.Container;
+import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +45,7 @@ class WarehouseControllerTest {
         when(warehouseService.saveArticles(any())).thenReturn(List.of(expectedArticle));
 
         mockMvc
-                .perform(post("/articles")
+                .perform(post("/load/articles")
                         .content(asJson(loadArticlesRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
@@ -66,13 +71,12 @@ class WarehouseControllerTest {
         when(warehouseService.saveProducts(any())).thenReturn(List.of(expectedProduct));
 
         mockMvc
-                .perform(post("/products")
+                .perform(post("/load/products")
                         .content(asJson(loadProductsRequest))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$[0]").exists())
                 .andExpect(jsonPath("$[0].name").value(expectedProduct.name()))
                 .andExpect(jsonPath("$[0].price").value(expectedProduct.price()));

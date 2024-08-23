@@ -24,3 +24,24 @@ spring:
     user: ${spring.datasource.username}
     password: ${spring.datasource.password}
     url: jdbc:postgresql://localhost:5432/warehouse
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: env, flyway, health, info
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+  info:
+    env:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+
