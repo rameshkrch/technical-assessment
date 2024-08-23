@@ -67,7 +67,7 @@ curl --header "Content-Type: application/json" http://localhost:8080/actuator/fl
 * Shouldn't have used quantity for stock and amount_of internally. Possible bad readability and maintainability 
   in some of the available prodoct logic. 
 * Last endpoint /sell not implemented due to time constraint. 
-* Open to null pointer att some places when going of script.
+* Open to null pointer at some places when going of script.
 * Possible to load inventory several times and get multiples of the same art_id.
 * ...
 
