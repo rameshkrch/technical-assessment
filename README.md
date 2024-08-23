@@ -1,6 +1,11 @@
 
 # Warehouse service
 
+## Prerequisites
+
+* Java 21
+* Docker
+
 ## REST API
 
 |    Endpoint	     | Method |      Req. body      | Status |   Resp. body   | Description    		    	                |
